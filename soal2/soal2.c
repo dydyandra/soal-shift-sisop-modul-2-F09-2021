@@ -36,7 +36,7 @@ void unzipFiles(){
 
         DIR *directory;
         directory=opendir("/home/dyandra/modul2/petshop");
-         if(directory!=NULL){
+        if(directory!=NULL){
              struct dirent *infolder;
              while((infolder = readdir(directory)) != NULL){
                  if(infolder->d_type == DT_DIR){
@@ -48,27 +48,51 @@ void unzipFiles(){
              }
 
          }
-
-
+         closedir(directory);
     }
 
     else{
         while((wait(&signal))>0){
 
+
         }
     }
 }
 
-void moveFiles(){
+int moveFiles(){
     int signal;
     pid_t child_id;
     child_id=fork();
-        
-    char *argv[]={"mkdir", "-p", "/home/dyandra/modul2/petshop/cat", NULL};
-    execute("/bin/mkdir", argv);
 
-    char *argv2[]={"mkdir", "-p", "/home/dyandra/modul2/petshop/dog", NULL};
-    execute("/bin/mkdir", argv2);
+    if (child_id == 0){
+        DIR *directory;
+        directory=opendir("/home/dyandra/modul2/petshop");
+        if(directory != NULL){
+            struct dirent *infolder;
+            while((infolder = readdir(directory)) != NULL){
+                if(infolder->d_type == DT_REG){
+                    char base[99] = "/home/dyandra/modul2/petshop/";
+                    // printf("%s ", infolder->d_name);
+                    char *token = strtok(infolder->d_name, ";");
+                    // printf("%s\n", token);
+                    strcat(base, token);
+                    // printf("%s\n", base);
+                    char *mkFolder[] = {"make-directory", "-p", base, NULL};
+                    execute("/bin/mkdir", mkFolder);
+
+                }
+            }
+        }   
+    closedir(directory);
+    }
+    else{
+        while((wait(&signal))>0){
+
+
+        }
+    }
+    
+
 }
 
 int main(){
