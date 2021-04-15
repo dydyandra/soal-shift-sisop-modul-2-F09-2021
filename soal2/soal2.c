@@ -106,8 +106,8 @@ void moveFiles(){
                     char newName[length];
                     sliceStr(fileName, newName, 0, length-5); 
 
-                    for (a=strtok_r(newName, "_", &c);\
-                        a!=NULL; a=strtok_r(NULL, "_", &c)){
+                    a=strtok_r(newName, "_", &c);
+                    for(;a!=NULL;a=strtok_r(NULL, "_", &c)){
                         i= 0;
                         char base[99] = "/home/dyandra/modul2/petshop/";
                         strcpy(copy, infolder->d_name);
@@ -115,13 +115,19 @@ void moveFiles(){
                         strcpy(base3, base);
                         strcpy(copy2, infolder->d_name);
                         strcpy(copy3, infolder->d_name);
-                            for (b=strtok_r(a, ";", &d); \
-                                b!=NULL; b=strtok_r(NULL, ";", &d)){
-                                if (i == 0) strcpy(animal, b);
-                                if (i == 1) strcpy(name, b);
-                                if (i == 2) strcpy(age, b);
-                                i=i+1;
+                        b=strtok_r(a, ";", &d);
+                        for (; b!=NULL; b=strtok_r(NULL, ";", &d)){
+                            if (i == 0) {
+                                strcpy(animal, b);
                             }
+                            if (i == 1) {
+                                strcpy(name, b);
+                            }
+                            if (i == 2){
+                                strcpy(age, b);
+                            }
+                            i=i+1;
+                        }
                     
                         /* untuk membuat folder baru */
                         // printf("%s\n", a);
@@ -139,12 +145,13 @@ void moveFiles(){
                         strcpy(namePerAnimal, name);
 
                         /* buat ngecopy file ke dalam tiap folder */
-                        strcat(name, ".jpg");
+                        // strcat(name, ".jpg");
                         strcat(base2, copy2);
                         char *copytoFolder[] = {"cp", "-r", base2, base, NULL};
                         execute("/bin/cp", copytoFolder);
 
                         /* buat rename setiap file */
+                        strcat(name, ".jpg");
                         strcpy(base3, base);
                         strcat(base3, "/");
                         strcat(base3, copy2);
@@ -184,8 +191,9 @@ void moveFiles(){
 
         }
      
-    closedir(directory);
+        closedir(directory);
     }
+    
     else{
         // parent's process
         while((wait(&signal))>0){
