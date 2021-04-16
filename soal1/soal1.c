@@ -1,10 +1,15 @@
-#include<sys/types.h>
-#include<sys/wait.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<dirent.h>
-#include<unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+#include <time.h>
+#include <dirent.h>
 
 
 void execute(char script[], char *argv[]){
@@ -114,45 +119,108 @@ void zipFiles(){
     char *argv[] = {"zip", "-rmvq", "Lopyu_Stevany.zip", "Musyik", "Fylm", "Pyoto", NULL};
     execute("/bin/zip", argv);
 
-    DIR *directory;
-    directory=opendir("/home/muthia/modul2");
-    if (directory!=NULL){
-        struct dirent *infolder;
-        while(infolder=readdir(directory)){
-            if(strstr(infolder->d_name, ".zip")!= NULL){
-                char base[99] = "/home/muthia/modul2";
-                strcat(base, infolder->d_name);
-                char *argv2[]={"remove", "-rf", base, NULL};
-                execute("/bin/rm", argv2);
-            }
-        }
-        
-    }
-    closedir(directory);
 }
 
-int main(){
-    int signal;
-    pid_t child_id;
-    child_id=fork();
+int main() {
+    int flag = 0;
+    time_t     now;
+    struct tm *ts;
+    char       buf[80];
 
-    if(child_id<0){
+    /* Get the current time */
+    now = time(NULL);
+
+    /* Format and print the time, "ddd yyyy-mm-dd hh:mm:ss zzz" */
+    ts = localtime(&now);
+    strftime(buf, sizeof(buf), "%m-%d %H:%M", ts);
+    // puts(buf);
+
+    pid_t pid, sid;        // Variabel untuk menyimpan PID
+  
+
+    pid = fork();     // Menyimpan PID dari Child Process
+
+    /* Keluar saat fork gagal
+    * (nilai variabel pid < 0) */
+    if (pid < 0) {
         exit(EXIT_FAILURE);
     }
 
-    if(child_id==0){
-
-        makeFolder();
-        downloadFiles();
-        extractMusik();
-        extractFoto();
-        extractFilm();
-
+    /* Keluar saat fork berhasil
+    * (nilai variabel pid adalah PID dari child process) */
+    if (pid > 0) {
+        exit(EXIT_SUCCESS);
     }
-    else{
-        while((wait(&signal))>0){
-            zipFiles();
+
+    umask(0);
+
+    sid = setsid();
+    if (sid < 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    if ((chdir("/home/dyandra/modul2")) < 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
+
+
+    while (1) {
+    // Tulis program kalian di sini
+            /* Get the current time */
+        now = time(NULL);
+
+    /* Format and print the time, "ddd yyyy-mm-dd hh:mm:ss zzz" */
+        ts = localtime(&now);
+        strftime(buf, sizeof(buf), "%m-%d %H:%M", ts);
+        // puts(buf);
+        if(strcmp(buf, "04-09 16:22") == 0 && flag == 0){
+            flag = 1;
+            int signal;
+            pid_t child_id;
+            child_id=fork();
+
+            if(child_id<0){
+            exit(EXIT_FAILURE);
+            }
+
+            if(child_id==0){
+                
+                // printf("hello");
+                makeFolder();
+                downloadFiles();
+                _exit(1);
+                // extractMusik();
+                // extractFoto();
+                // extractFilm();
+                // break;
+       
+            }   
+            else{
+                while((wait(&signal))>0){
+                    sleep(10);
+                    extractMusik();
+                    extractFoto();
+                    extractFilm();
+                    // flag = 1;
+                    // _exit(1);  
+
+                        
+                    
+            }
+            }
         }
-    }
 
+        // printf("hello");
+        if(strcmp(buf, "04-09 22:22") == 0){
+            zipFiles();
+            _exit(1);
+           
+        }
+        sleep(1);
+    }
 }
+    
