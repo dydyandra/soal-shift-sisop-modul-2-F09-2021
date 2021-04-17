@@ -10,6 +10,7 @@
 #include <time.h>
 #include <wait.h>
 
+/* utility function */
 void execute(char script[], char *argv[]){
     int status;
     pid_t child_id;
@@ -21,7 +22,7 @@ void execute(char script[], char *argv[]){
         while((wait(&status))>0){}
     }
 }
-
+ /* 3b untuk mendownload gambar */
 void downloadPicture(char *path){
   pid_t child_id;
   int status;
@@ -66,7 +67,7 @@ void downloadPicture(char *path){
   }
 }
 
-
+/* 3c untuk menzip files */
 void zipFiles(char *path){
   // char base[99]="/home/dyandra/modul2/";
   char pathzip[99];
@@ -79,11 +80,38 @@ void zipFiles(char *path){
   
 }
 
-void killerProgram(){
+/* 3d dan 3e */
+void killerProgram(char mode[], int pid){
+  FILE *fPtr;
+  char killerFile[99] = "killer.sh";
+  fPtr = fopen(killerFile, "w");
+
+  if(strcmp(mode, "-x") == 0){
+    fprintf(fPtr, "#!/bin/bash\nkill %d\nrm killer\n", pid);
+  }
+  else if (strcmp(mode, "-z") == 0){
+    fprintf(fPtr, "#!/bin/bash\nkillall -9 ./soal3\nrm killer\n");
+  }
+
+  int signal;
+  if(fork() == 0){
+    if(fork() == 0){
+      char *run[] = {"chmod", "u+x", killerFile, NULL};
+      execv("/bin/chmod", run);
+    }
+    else{
+      while(wait(&signal)){
+        char *rename[] = {"mv", killerFile, "killer", NULL};
+        execv("/bin/mv", rename);
+      }
+    }
+  }
+
+  fclose(fPtr);
   
 }
 
-int main() {
+int main(int argc, char **argv) {
   pid_t pid, sid;        // Variabel untuk menyimpan PID
 
   pid = fork();     // Menyimpan PID dari Child Process
@@ -116,6 +144,8 @@ int main() {
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
 
+  killerProgram(argv[1], killPid);
+
   while (1) {
         int status, status1;
         char base[99] = "/home/dyandra/modul2/";
@@ -130,7 +160,7 @@ int main() {
         pid_t child_id;
         child_id = fork();
         if (child_id == 0){
-            // buat download
+            /* 3a untuk membuat folder/direktori baru */
             strcat(base, temp);
             char *makedir[] = {"make directory", base, NULL};
             execute("/bin/mkdir", makedir);
@@ -138,25 +168,29 @@ int main() {
             pid_t child_id2;
             if (child_id2 = fork() == 0){
                 for (int i = 0; i < 10; i++){
+                    /* 3b untuk mendownload gambar*/
                     downloadPicture(temp);
-                    sleep(5);
+                    sleep(5); // tunggu untuk mendownload selama 5 detik
                 }
 
-                pid_t child_id3;
-                if(child_id3 = fork() == 0){
-                    char message[100], ch;
-                    int i, key=5;
-                    char folder[99];
-                    char txt[99]="/status.txt";
-                    strcpy(folder, base);
-                    strcat(folder, txt);
-                    FILE *fPtr = fopen(folder, "w");
+                /* 3c calgoritma caesar cipher untuk status dan zip file*/
+                /* algo caesar: https://www.thecrazyprogrammer.com/2016/11/caesar-cipher-c-c-encryption-decryption.html */
 
-                    strcat(message, "Download Success");
-                    for(i = 0; message[i] != '\0'; i++){
-                      ch = message[i];
+                // pid_t child_id3;
+                // if(child_id3 = fork() == 0){
+                char message[100], ch;
+                int i, key=5;
+                char folder[99];
+                char txt[99]="/status.txt";
+                strcpy(folder, base);
+                strcat(folder, txt);
+                FILE *fPtr = fopen(folder, "w");
 
-                      if(ch >= 'a' && ch <= 'z'){
+                strcat(message, "Download Success");
+                for(i = 0; message[i] != '\0'; i++){
+                    ch = message[i];
+
+                    if(ch >= 'a' && ch <= 'z'){
                         ch+=key;
 
                         if (ch > 'z'){
@@ -177,14 +211,13 @@ int main() {
                       }
 
                       fputc(ch, fPtr);
-                    }
-
-                    fclose(fPtr);
-                    zipFiles(temp);
                 }
+
+                fclose(fPtr);
+                zipFiles(temp);
+                // }
             }
-            
-            
+               
             // else{
             //     while(wait(&status1));
             // }
@@ -192,6 +225,6 @@ int main() {
         else{
             while(wait(&status));
         }
-    sleep(40);
+    sleep(40); // tunggu 40 detik untuk membuat direktori baru
   }
 }
