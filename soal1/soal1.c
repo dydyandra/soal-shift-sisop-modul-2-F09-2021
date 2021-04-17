@@ -159,7 +159,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    if ((chdir("/home/dyandra/modul2")) < 0) {
+    if ((chdir("/home/muthia/modul2")) < 0) {
         exit(EXIT_FAILURE);
     }
 
@@ -169,11 +169,11 @@ int main() {
 
 
     while (1) {
-    // Tulis program kalian di sini
-            /* Get the current time */
+
+        /* Get the current time */
         now = time(NULL);
 
-    /* Format and print the time, "ddd yyyy-mm-dd hh:mm:ss zzz" */
+        /* Format and print the time, "ddd yyyy-mm-dd hh:mm:ss zzz" */
         ts = localtime(&now);
         strftime(buf, sizeof(buf), "%m-%d %H:%M", ts);
         // puts(buf);
