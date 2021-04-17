@@ -66,10 +66,28 @@ void downloadPicture(char *path){
   }
 }
 
+
+void zipFiles(char *path){
+  // char base[99]="/home/dyandra/modul2/";
+  char pathzip[99];
+  strcpy(pathzip, path);
+  strcat(pathzip, ".zip");
+  
+
+  char *zipping[] = {"zipping folder", "-rmq", pathzip, path, NULL};
+  execute("/bin/zip", zipping);
+  
+}
+
+void killerProgram(){
+  
+}
+
 int main() {
   pid_t pid, sid;        // Variabel untuk menyimpan PID
 
   pid = fork();     // Menyimpan PID dari Child Process
+  int killPid = getpid();
 
   /* Keluar saat fork gagal
   * (nilai variabel pid < 0) */
@@ -124,12 +142,49 @@ int main() {
                     sleep(5);
                 }
 
-                // pid_t child_id3;
-                // if(child)_id3 = fork() == 0){
-                    
-                // }
-            }
+                pid_t child_id3;
+                if(child_id3 = fork() == 0){
+                    char message[100], ch;
+                    int i, key=5;
+                    char folder[99];
+                    char txt[99]="/status.txt";
+                    strcpy(folder, base);
+                    strcat(folder, txt);
+                    FILE *fPtr = fopen(folder, "w");
 
+                    strcat(message, "Download Success");
+                    for(i = 0; message[i] != '\0'; i++){
+                      ch = message[i];
+
+                      if(ch >= 'a' && ch <= 'z'){
+                        ch+=key;
+
+                        if (ch > 'z'){
+                          ch-= 'z' - 'a' + 1;
+                        }
+
+                        message[i] = ch;
+                      }
+
+                      else if (ch >= 'A' && ch <= 'Z'){
+                        ch+=key;
+
+                        if (ch > 'Z'){
+                          ch-= 'Z' - 'A' + 1;
+                        }
+
+                        message[i] = ch;
+                      }
+
+                      fputc(ch, fPtr);
+                    }
+
+                    fclose(fPtr);
+                    zipFiles(temp);
+                }
+            }
+            
+            
             // else{
             //     while(wait(&status1));
             // }
