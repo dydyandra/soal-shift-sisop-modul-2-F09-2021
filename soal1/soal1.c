@@ -11,7 +11,6 @@
 #include <time.h>
 #include <dirent.h>
 
-
 void execute(char script[], char *argv[]){
     int status;
     pid_t child_id;
@@ -64,7 +63,8 @@ void extractMusik(){
             }
         }
     }
-    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/MUSIK", "/home/muthia/modul2/Musik_for_Stevany.zip", NULL};
+//    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/MUSIK", "/home/muthia/modul2/Musik_for_Stevany.zip", NULL};
+    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/MUSIK", NULL};
     execute("/bin/rm", argv3);
 
 }
@@ -86,9 +86,9 @@ void extractFilm(){
             }
         }
     }
-    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FILM", "/home/muthia/modul2/Film_for_Stevany.zip", NULL};
+//    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FILM", "/home/muthia/modul2/Film_for_Stevany.zip", NULL};
+    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FILM", NULL};
     execute("/bin/rm", argv3);
-        // renameFiles();
 }
 
 void extractFoto(){
@@ -108,8 +108,8 @@ void extractFoto(){
             }
         }
     }
-//    closedir(directory);
-    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FOTO",  "/home/muthia/modul2/Foto_for_Stevany.zip", NULL};
+//    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FOTO",  "/home/muthia/modul2/Foto_for_Stevany.zip", NULL};
+    char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/FOTO",  NULL};
     execute("/bin/rm", argv3);
 
 }
@@ -136,18 +136,17 @@ int main() {
     // puts(buf);
 
     pid_t pid, sid;        // Variabel untuk menyimpan PID
-  
 
     pid = fork();     // Menyimpan PID dari Child Process
 
     /* Keluar saat fork gagal
-    * (nilai variabel pid < 0) */
+       (nilai variabel pid < 0) */
     if (pid < 0) {
         exit(EXIT_FAILURE);
     }
 
     /* Keluar saat fork berhasil
-    * (nilai variabel pid adalah PID dari child process) */
+       (nilai variabel pid adalah PID dari child process) */
     if (pid > 0) {
         exit(EXIT_SUCCESS);
     }
@@ -188,7 +187,7 @@ int main() {
             }
 
             if(child_id==0){
-                
+
                 // printf("hello");
                 makeFolder();
                 downloadFiles();
@@ -197,8 +196,8 @@ int main() {
                 // extractFoto();
                 // extractFilm();
                 // break;
-       
-            }   
+
+            }
             else{
                 while((wait(&signal))>0){
                     sleep(10);
@@ -206,11 +205,8 @@ int main() {
                     extractFoto();
                     extractFilm();
                     // flag = 1;
-                    // _exit(1);  
-
-                        
-                    
-            }
+                    // _exit(1);
+           	 }
             }
         }
 
@@ -218,9 +214,7 @@ int main() {
         if(strcmp(buf, "04-09 22:22") == 0){
             zipFiles();
             _exit(1);
-           
         }
         sleep(1);
     }
 }
-    
