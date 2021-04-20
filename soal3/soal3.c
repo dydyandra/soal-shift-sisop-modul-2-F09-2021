@@ -11,17 +11,17 @@
 #include <wait.h>
 
 /* utility function */
-void execute(char script[], char *argv[]){
-    int status;
-    pid_t child_id;
-    child_id=fork();
+// void execute(char script[], char *argv[]){
+//     int status;
+//     pid_t child_id;
+//     child_id=fork();
 
-    if(child_id==0){
-        execv(script, argv);
-    }else{
-        while((wait(&status))>0){}
-    }
-}
+//     if(child_id==0){
+//         execv(script, argv);
+//     }else{
+//         while((wait(&status))>0){}
+//     }
+// }
  /* 3b untuk mendownload gambar */
 void downloadPicture(char *path){
   pid_t child_id;
@@ -58,13 +58,13 @@ void downloadPicture(char *path){
       // printf("%s\n", base);
 
       char *download[]={"wget", "-bq", url, "-O", base, NULL};
-      execute("/bin/wget", download);
+      execv("/bin/wget", download);
 
     // }
   } 
-  else{
-    while(wait(&status));
-  }
+//   else{
+//     while(wait(&status));
+//   }
 }
 
 /* 3c untuk menzip files */
@@ -76,7 +76,7 @@ void zipFiles(char *path){
   
 
   char *zipping[] = {"zipping folder", "-rmq", pathzip, path, NULL};
-  execute("/bin/zip", zipping);
+  execv("/bin/zip", zipping);
   
 }
 
@@ -112,41 +112,41 @@ void killerProgram(char mode[], int pid){
 }
 
 int main(int argc, char **argv) {
-  pid_t pid, sid;        // Variabel untuk menyimpan PID
+    pid_t pid, sid;        // Variabel untuk menyimpan PID
 
-  pid = fork();     // Menyimpan PID dari Child Process
-  int killPid = getpid();
+    pid = fork();     // Menyimpan PID dari Child Process
+    int killPid = getpid();
 
-  /* Keluar saat fork gagal
-  * (nilai variabel pid < 0) */
-  if (pid < 0) {
-    exit(EXIT_FAILURE);
-  }
+    /* Keluar saat fork gagal
+    * (nilai variabel pid < 0) */
+    if (pid < 0) {
+        exit(EXIT_FAILURE);
+    }
 
-  /* Keluar saat fork berhasil
-  * (nilai variabel pid adalah PID dari child process) */
-  if (pid > 0) {
-    exit(EXIT_SUCCESS);
-  }
+    /* Keluar saat fork berhasil
+    * (nilai variabel pid adalah PID dari child process) */
+    if (pid > 0) {
+        exit(EXIT_SUCCESS);
+    }
 
-  umask(0);
+    umask(0);
 
-  sid = setsid();
-  if (sid < 0) {
-    exit(EXIT_FAILURE);
-  }
+    sid = setsid();
+    if (sid < 0) {
+        exit(EXIT_FAILURE);
+    }
 
-  if ((chdir("/home/dyandra/modul2/")) < 0) {
-    exit(EXIT_FAILURE);
-  }
+    if ((chdir("/home/dyandra/modul2/")) < 0) {
+        exit(EXIT_FAILURE);
+    }
 
-  close(STDIN_FILENO);
-  close(STDOUT_FILENO);
-  close(STDERR_FILENO);
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
 
-  killerProgram(argv[1], killPid);
+    killerProgram(argv[1], killPid);
 
-  while (1) {
+    while (1) {
         int status, status1;
         char base[99] = "/home/dyandra/modul2/";
         time_t now;
@@ -160,13 +160,16 @@ int main(int argc, char **argv) {
         pid_t child_id;
         child_id = fork();
         if (child_id == 0){
-            /* 3a untuk membuat folder/direktori baru */
-            strcat(base, temp);
-            char *makedir[] = {"make directory", base, NULL};
-            execute("/bin/mkdir", makedir);
-
             pid_t child_id2;
             if (child_id2 = fork() == 0){
+                 /* 3a untuk membuat folder/direktori baru */
+                strcat(base, temp);
+                char *makedir[] = {"make directory", base, NULL};
+                execv("/bin/mkdir", makedir);
+
+            }
+            else{
+                while((wait(&status)) > 0);
                 for (int i = 0; i < 10; i++){
                     /* 3b untuk mendownload gambar*/
                     downloadPicture(temp);
@@ -178,6 +181,7 @@ int main(int argc, char **argv) {
 
                 // pid_t child_id3;
                 // if(child_id3 = fork() == 0){
+                strcat(base, temp);
                 char message[100], ch;
                 int i, key=5;
                 char folder[99];
@@ -215,16 +219,12 @@ int main(int argc, char **argv) {
 
                 fclose(fPtr);
                 zipFiles(temp);
-                // }
+
             }
-               
-            // else{
-            //     while(wait(&status1));
-            // }
+                
         }
-        else{
-            while(wait(&status));
-        }
-    sleep(40); // tunggu 40 detik untuk membuat direktori baru
-  }
+        sleep(40);
+    }
+
+    // sleep(40); // tunggu 40 detik untuk membuat direktori baru
 }
