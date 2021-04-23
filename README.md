@@ -31,6 +31,9 @@ void makeFolder(){
 ```
 Mendeklarasikan char pointer argv, argv2, dan argv3 untuk meletakkan command sebelum dieksekusi dengan execv. Kemudian dieksekusi dengan perintah `execute("/bin/mkdir", argv)`. Lalu fungsi dipanggil pada int main. 
 
+### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1a.jpeg">
+
 ### b. Mengunduh musik, film, dan foto sesuai dengan link yang telah disediakan
 Untuk mengunduh musik, film, dan foto, kami menggunakan fungsi berikut.
 ```c
@@ -43,6 +46,8 @@ void downloadFiles(){
     execute("/bin/wget", argv2);
 }
 ```
+### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1b.jpeg">
 
 ### c. Meng-extract zip dari folder yang telah diunduh
 Untuk meng-extract file zip, kami menggunakan fungsi extractMusik() untuk meng-extract musik, extractFilm() untuk meng-extract film, dan extractFoto() untuk meng-extract foto.
@@ -70,6 +75,9 @@ void extractMusik(){
 ```
 Fungsi diatas bertujuan untuk meng-extract file musik pada direktori `/home/muthia/modul2` kemudian memindahkan hasil extract ke dalam direktori yang telah dibuat pada soal 1a.
 
+### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1c.jpeg">
+
 ### d. Memindahkan hasil extract ke dalam direktori yang telah dibuat pada soal 1a (hanya file yang dimasukkan)
 Untuk memindahkan hasil extract ke dalam direktori Musyik, Fylm, dan Pyoto, kami menggunakan fungsi yang sama seperti yang ada pada soal 1c. Perintah `directory = opendir("/home/muthia/modul2/MUSIK")` digunakan untuk membuka direktori MUSIK kemudian dicek apakah direktori sudah terbuka atau belom. Lalu memindahkan file yang ada didalam direktori ke direktori Musyik dengan perintah berikut.
 ```c
@@ -81,6 +89,11 @@ Apabila semua file telah dipindahkan, maka direktori lama akan dihapus, yaitu di
 char *argv3[] = {"remove", "-rf", "/home/muthia/modul2/MUSIK", NULL};
 execute("/bin/rm", argv3);
 ```
+
+### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (1).jpeg">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (2).jpeg">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (3).jpeg">
 
 ### e. Membuat daemon yang menjalankan soal 1a-1d yang berjalan pada tanggal 9 April pukul 16:22
 ```c
@@ -134,7 +147,10 @@ if(strcmp(buf, "04-09 22:22") == 0){
 Fungsi tersebut akan membuat zip dengan nama Lopyu_Stevany.zip pada tanggal 9 April pukul 22:22
 
 ### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1f.jpeg">
+
 ### Kendala yang dialami
+- Menjalankan daemon sesuai setting date yang diinginkan. 
 
 ## Penjelasan No. 2
 Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kita adalah teman baik Loba dan Ia meminta bantuan kita untuk membantu pekerjaannya.
