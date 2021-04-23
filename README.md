@@ -494,6 +494,12 @@ Kemudian, untuk memasukkan file txt sendiri dengan cara membuat path baru berisi
 
 
 ### Output
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/1.png" width="450"> | <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/2.png" width="450"> 
+
+Isi dari contoh folder: Cat & Dog beserta keterangan.txt di setiap folder. Salah satu contoh foto dimana terdapat 2 jenis peliharaan yaitu cat;ava;6_dog;walter;6.jpg. Dapat terlihat bahwa dalam folder Cat terdapat keterangan nama ava dan gambar ava.jpg dan dalam folder Dog terdapat juga gambar yang sama dengan nama walter.jpg dan keterangan nama walter di txt.
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/3.png"> | <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/4.png"> 
+
+
 ### Kendala yang dialami
 - Sebelumnya, kami menggunakan strtok biasa untuk melakukan pemisahan string, akan tetapi ternyata nilai pada variabel yang akan dipisah ikut berubah apabila menggunakan strtok. Sehingga kami akhirnya menggunakan strtok_r untuk pemisahan string. [Referensi](https://stackoverflow.com/questions/15961253/c-correct-usage-of-strtok-r#:~:text=The%20strtok_r()%20function%20is,that%20parse%20the%20same%20string)
 
@@ -707,6 +713,23 @@ Fungsi `killerProgram` ini dimasukkan ke dalam main untuk dipanggil, akan tetapi
 
 
 ### Output
+#### Saat mode -X
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/x1.png">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/x2.png">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/x3.png">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/x4.png">
+Dapat terlihat dari gambar-gambar di atas bahwa folder berhasil terbuat setiap 40 detik, gambar terbuat setiap 5 detik di setiap folder, dan proses berhenti setelah folder telah di zip saat mengerun killer (dapat dilihat dari `ps aux | grep ./soal3`).
+
+#### Saat mode -Z
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/z1.png">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/z2.png">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/z3.png">
+Dapat terlihat dari gambar-gambar di atas bahwa folder berhasil terbuat setiap 40 detik, gambar terbuat setiap 5 detik di setiap folder, dan proses berhenti secara langsung saat mengerun killer (dapat dilihat dari `ps aux | grep ./soal3`)
+
+### Isi zip
+Terdapat 10 gambar di zip dan terdapat status.txt yang berisi tulisan "Download Success" yang telah dienkripsi menggunakan Algoritma Caesar Cipher. 
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal3/status.png">
+
 ### Kendala yang dialami
 - Mode `-x` tidak mau menghentikan program apabila dijalankan, dan proses di background apabila di check dengan `ps aux | grep ./soal3` tetap terus berjalan. Hal ini ternyata disebabkan oleh terlalu banyak fork() yang dilakukan pada program, sehingga banyak proses yang masih terus berjalan walaupun telah di kill oleh -x. Untuk mencegah ini, kami tidak menggunakan *utility function* seperti pada nomor 2, dan tetap menggunakan `execv` saja, dan juga mempermudah proses di utama sehingga hanya ada 2 proses yang terlibat, yaitu child process yang akan membuat directory dan parent untuk bagian yang lainnya. 
 - Algoritma caesar-cipher tidak kami ketahui sebelumnya, akan tetapi teratasi setelah mendapatkan referensi dari google. Referensi algoritma yang kami gunakan yaitu: [Referensi](https://www.thecrazyprogrammer.com/2016/11/caesar-cipher-c-c-encryption-decryption.html)
