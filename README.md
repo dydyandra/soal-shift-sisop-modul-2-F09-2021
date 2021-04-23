@@ -91,8 +91,7 @@ execute("/bin/rm", argv3);
 ```
 
 ### Output
-<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (1).jpeg">
-<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (2).jpeg">
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (1).jpeg"> <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (2).jpeg">
 <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/Soal1/Soal 1d (3).jpeg">
 
 ### e. Membuat daemon yang menjalankan soal 1a-1d yang berjalan pada tanggal 9 April pukul 16:22
