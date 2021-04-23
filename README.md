@@ -499,6 +499,8 @@ Kemudian, untuk memasukkan file txt sendiri dengan cara membuat path baru berisi
 Isi dari contoh folder: Cat & Dog beserta keterangan.txt di setiap folder. Salah satu contoh foto dimana terdapat 2 jenis peliharaan yaitu cat;ava;6_dog;walter;6.jpg. Dapat terlihat bahwa dalam folder Cat terdapat keterangan nama ava dan gambar ava.jpg dan dalam folder Dog terdapat juga gambar yang sama dengan nama walter.jpg dan keterangan nama walter di txt.
 <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/3.png"> | <img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/4.png"> 
 
+Jumlah gambar dalam setiap folder (dengan menggunakan script yang diberikan oleh Asisten Dosen): 
+<img src="https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/blob/master/screenshot/soal2/5.png"> 
 
 ### Kendala yang dialami
 - Sebelumnya, kami menggunakan strtok biasa untuk melakukan pemisahan string, akan tetapi ternyata nilai pada variabel yang akan dipisah ikut berubah apabila menggunakan strtok. Sehingga kami akhirnya menggunakan strtok_r untuk pemisahan string. [Referensi](https://stackoverflow.com/questions/15961253/c-correct-usage-of-strtok-r#:~:text=The%20strtok_r()%20function%20is,that%20parse%20the%20same%20string)
