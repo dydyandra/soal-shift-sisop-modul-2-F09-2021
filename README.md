@@ -8,9 +8,9 @@ Ifanu Antoni | 05111940000064
 Dyandra Paramitha W. | 05111940000119
 
 ### Soal
-1. [File Soal 1] | [Penjelasan No. 1](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-1)
-2. [File Soal 2] | [Penjelasan No. 2](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-2)
-3. [File Soal 3] | [Penjelasan No. 3](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-3)
+1. [File Soal 1](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/tree/master/soal1) | [Penjelasan No. 1](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-1)
+2. [File Soal 2](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/tree/master/soal2) | [Penjelasan No. 2](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-2)
+3. [File Soal 3](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021/tree/master/soal3) | [Penjelasan No. 3](https://github.com/dydyandra/soal-shift-sisop-modul-2-F09-2021#penjelasan-no-3)
 
 ## Penjelasan No. 1
 Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya pacar, namun sudah putus sebelum pacaran. Ketika dia galau memikirkan mantan, ia selalu menonton https://www.youtube.com/watch?v=568DH_9CMKI untuk menghilangkan kesedihannya. 
